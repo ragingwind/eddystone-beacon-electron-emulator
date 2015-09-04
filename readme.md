@@ -12,21 +12,13 @@
 $ npm install
 ```
 
-<<<<<<< HEAD
 ### Run application
-=======
-### Run
->>>>>>> b624e7f7a7c94518a8a5ba80c125353515507c70
 
 ```
 $ npm start
 ```
 
-<<<<<<< HEAD
 ### Build application
-=======
-### Build
->>>>>>> b624e7f7a7c94518a8a5ba80c125353515507c70
 
 ```
 $ npm run build
