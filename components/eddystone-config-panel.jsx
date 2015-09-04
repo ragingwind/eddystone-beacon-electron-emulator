@@ -1,13 +1,15 @@
 'use strict'
 
 var React = require('react');
+var url = require('url');
 
 var ESCAPE_KEY = 27;
 var ENTER_KEY = 13;
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
-function isValidBeaconURL(url) {
-	return /^http/.test(url) && url.length > 18;
+function isValidBeaconURL(beaconURL) {
+	var protocol = url.parse(beaconURL).protocol;
+	return protocol && beaconURL.slice(protocol.length + 2).length <= 18;
 }
 
 module.exports = React.createClass({
