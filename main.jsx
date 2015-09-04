@@ -8,7 +8,7 @@ const ipc = require('ipc');
 const MainApp = React.createClass({
   getInitialState: function () {
     return {
-      url: 'http://goo.gl/eddy'
+      url: 'https://goo.gl/Aq18zF'
     };
   },
 	hideConfigPanel: function (url) {
