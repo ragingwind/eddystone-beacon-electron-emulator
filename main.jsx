@@ -1,52 +1,39 @@
 'use strict';
 
-var React = require('react');
-var ipc = require('ipc');
+const React = require('react');
+const BeaconDevice = require('./components/eddystone-device');
+const BeaconConfigPanel = require('./components/eddystone-config-panel');
+const ipc = require('ipc');
 
-var ESCAPE_KEY = 27;
-var ENTER_KEY = 13;
-
-var MainApp = React.createClass({
-  url: 'goo.gl/eddy',
-  urlHasUnfocused: function (e) {
-    this.url = this.state.url.trim();
-    this.setState({url: this.url});
-
-		ipc.sendSync('synchronous-message', url);
-	},
-  urlHasChanged: function (e) {
-		this.setState({url: e.target.value});
-  },
-  urlOnKeyDown: function (e) {
-    if (e.which === ESCAPE_KEY) {
-			console.log('cancel');
-      this.setState({url: this.url});
-    } else if (e.which === ENTER_KEY) {
-      this.urlHasUnfocused();
-    }
-  },
+const MainApp = React.createClass({
   getInitialState: function () {
-    return {url: this.url};
+    return {
+      url: 'http://goo.gl/eddy'
+    };
   },
-	componentDidUpdate: function () {
-		console.log('didUpdate', this.url);
-		ipc.sendSync('synchronous-message', this.url);
+	hideConfigPanel: function (url) {
+    this.refs.configPanel.hide();
+    if (url) {
+      this.setState({url: url});
+      ipc.send('beacon', url);
+    }
 	},
+  showConfigPanel: function () {
+    this.refs.configPanel.show();
+  },
+  componentDidMount: function () {
+    ipc.send('beacon', this.state.url);
+  },
   render: function() {
-    return <div>
-      <div id="es-activity">
-				<img src="components/eddystone_logo.png"></img>
+    return (
+      <div>
+        <BeaconDevice onClickConfig={this.showConfigPanel}/>
+        <BeaconConfigPanel
+          ref="configPanel"
+          url={this.state.url} 
+          onExit={this.hideConfigPanel} />
       </div>
-      <div id="es-url-input">
-        <input className="url-input" type="input"
-               value={this.state.url}
-               onBlur={this.urlHasUnfocused}
-               onChange={this.urlHasChanged}
-               onKeyDown={this.urlOnKeyDown}
-				/>
-      </div>
-    </div>;
-
+    );
   }
 });
 

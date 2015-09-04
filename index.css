@@ -2,4 +2,72 @@ html,
 body {
 	padding: 0;
 	margin: 0;
+	font: 13px/1.4 Helvetica, arial;
+}
+
+#container {
+	width: 192px;
+	height: 192px;
+	padding: 0;
+	margin: 0;
+}
+
+.config-panel {
+  z-index: 1;
+  top: 0px;
+  position: absolute;
+	width: 192px;
+	height: 192px;
+	background-color:rgb(255, 255, 255);
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.config-panel label {
+	width: 13em;
+	padding-bottom: 0.3em;
+}
+
+.config-panel input {
+	outline: 0;
+}
+
+.slide-enter {
+  left: -192px;
+  transition: .5s;
+}
+
+.slide-enter.slide-enter-active {
+  left: 0px;
+}
+
+.slide-leave {
+  left: 0px;
+  transition: .5s;
+}
+
+.slide-leave.slide-leave-active {
+  left: -192px;
+}
+
+.beacon-device {
+	background-image: url(components/eddystone_logo.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 192px;
+	height: 192px;
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+.beacon-config {
+	background-image: url(components/eddystone_config.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 32px;
+	height: 32px;
+	cursor: pointer; cursor: hand;
 }

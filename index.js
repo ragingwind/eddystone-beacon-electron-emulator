@@ -1,7 +1,9 @@
 'use strict';
+
 const app = require('app');
 const BrowserWindow = require('browser-window');
-var XpcConnection = require('xpc-connection');
+const ipc = require('ipc');
+const beacon = require('eddystone-beacon');
 
 // report crashes to the Electron project
 require('crash-reporter').start();
@@ -24,18 +26,18 @@ app.on('ready', function () {
 		height: 192,
 		resizable: true
 	});
+	
+	mainWindow.setContentSize(192, 192);
 
 	mainWindow.loadUrl(`file://${__dirname}/index.html`);
 
 	mainWindow.on('closed', function () {
-		// deref the window
-		// for multiple windows store them in an array
 		mainWindow = null;
 	});
 });
 
-
-// ipc.on('synchronous-message', function(event, arg) {
-//   console.log('recv url', arg);
-//   EddystoneBeacon.advertiseUrl(arg);
-// });
+ipc.on('beacon', function(event, url) {
+	console.log('URL for advertising has been updated to', url);
+	
+	beacon.advertiseUrl(url);
+});
