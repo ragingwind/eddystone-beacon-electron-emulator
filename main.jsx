@@ -6,37 +6,37 @@ const BeaconConfigPanel = require('./components/eddystone-config-panel');
 const ipc = require('ipc');
 
 const MainApp = React.createClass({
-  getInitialState: function () {
-    return {
-      url: 'https://goo.gl/Aq18zF'
-    };
-  },
-	hideConfigPanel: function (url) {
-    this.refs.configPanel.hide();
-    if (url) {
-      this.setState({url: url});
-      ipc.send('beacon', url);
-    }
+	getInitialState: function () {
+		return {
+			url: 'https://goo.gl/Aq18zF'
+		};
 	},
-  showConfigPanel: function () {
-    this.refs.configPanel.show();
-  },
-  componentDidMount: function () {
-    ipc.send('beacon', this.state.url);
-  },
-  render: function() {
-    return (
-      <div>
-        <BeaconDevice onClickConfig={this.showConfigPanel}/>
-        <BeaconConfigPanel
-          ref="configPanel"
-          url={this.state.url} 
-          onExit={this.hideConfigPanel} />
-      </div>
-    );
-  }
+	hideConfigPanel: function (url) {
+		this.refs.configPanel.hide();
+		if (url) {
+			this.setState({url: url});
+			ipc.send('beacon', url);
+		}
+	},
+	showConfigPanel: function () {
+		this.refs.configPanel.show();
+	},
+	componentDidMount: function () {
+		ipc.send('beacon', this.state.url);
+	},
+	render: function() {
+		return (
+			<div>
+				<BeaconDevice onClickConfig={this.showConfigPanel}/>
+				<BeaconConfigPanel
+					ref="configPanel"
+					url={this.state.url} 
+					onExit={this.hideConfigPanel} />
+			</div>
+		);
+	}
 });
 
 React.render(<MainApp/>,
-  document.getElementById('container')
+	document.getElementById('container')
 );
