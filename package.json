@@ -1,5 +1,5 @@
 {
-  "name": "electron-eddystone-beacon",
+  "name": "eddystone-beacon-electron-emulator",
   "productName": "Eddystone beacon",
   "version": "0.1.2",
   "description": "Eddystone beacon peripheral for Mac",
@@ -8,7 +8,7 @@
   ],
   "license": "MIT",
   "main": "index.js",
-  "repository": "ragingwind/electron-eddystone-beacon",
+  "repository": "ragingwind/eddystone-beacon-electron-emulator",
   "author": {
     "name": "ragingwind",
     "email": "ragingwind@gmail.com",
