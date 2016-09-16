@@ -1,9 +1,10 @@
 'use strict';
 
 const React = require('react');
+const ReactDom = require('react-dom');
 const BeaconDevice = require('./components/eddystone-device');
 const BeaconConfigPanel = require('./components/eddystone-config-panel');
-const ipc = require('ipc');
+const { ipcRenderer } = require('electron');
 
 const MainApp = React.createClass({
 	getInitialState: function () {
@@ -15,14 +16,14 @@ const MainApp = React.createClass({
 		this.refs.configPanel.hide();
 		if (url) {
 			this.setState({url: url});
-			ipc.send('beacon', url);
+			ipcRenderer.send('beacon', url);
 		}
 	},
 	showConfigPanel: function () {
 		this.refs.configPanel.show();
 	},
 	componentDidMount: function () {
-		ipc.send('beacon', this.state.url);
+		ipcRenderer.send('beacon', this.state.url);
 	},
 	render: function() {
 		return (
@@ -30,13 +31,13 @@ const MainApp = React.createClass({
 				<BeaconDevice onClickConfig={this.showConfigPanel}/>
 				<BeaconConfigPanel
 					ref="configPanel"
-					url={this.state.url} 
+					url={this.state.url}
 					onExit={this.hideConfigPanel} />
 			</div>
 		);
 	}
 });
 
-React.render(<MainApp/>,
+ReactDom.render(<MainApp/>,
 	document.getElementById('container')
 );

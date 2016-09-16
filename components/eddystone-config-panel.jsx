@@ -5,7 +5,7 @@ var url = require('url');
 
 var ESCAPE_KEY = 27;
 var ENTER_KEY = 13;
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 function isValidBeaconURL(beaconURL) {
 	var protocol = url.parse(beaconURL).protocol;
@@ -20,7 +20,7 @@ module.exports = React.createClass({
 		};
 	},
 	componentDidMount: function () {
-		var input = React.findDOMNode(this.refs.urlInput);
+		var input = this.refs.urlInput;
 		if (input) {
 			input.focus();
 			input.setSelectionRange(input.value.length, input.value.length);
@@ -33,7 +33,7 @@ module.exports = React.createClass({
 	handleKeyDown: function (e) {
 		if (e.which === ESCAPE_KEY) {
 			this.handleBlur();
-		} else if (e.which === ENTER_KEY) {			
+		} else if (e.which === ENTER_KEY) {
 			if (isValidBeaconURL(this.state.url)) {
 				this.props.onExit(this.state.url);
 			} else {
@@ -71,7 +71,9 @@ module.exports = React.createClass({
 	}
 
 	return (
-		<ReactCSSTransitionGroup transitionName="slide">
+		<ReactCSSTransitionGroup transitionName="slide"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}>
 		{view}
 		</ReactCSSTransitionGroup>
 		);
